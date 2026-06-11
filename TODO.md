@@ -1,0 +1,4 @@
+- [ ] Add right sidebar history panel with delete button
+- [ ] Add CSS for history list items (optional)
+- [ ] Update app.js to record user questions into history and render them in right sidebar
+- [ ] Implement delete button to clear history

@@ -1,0 +1,450 @@
+    <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Finance Advisor Chatbot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <!-- Ensure chatArea can be hidden on budget page -->
+    <style>
+      #chatArea.hidden { display: none !important; }
+    </style>
+
+    <div class="app-shell">
+
+
+      <!-- Left sidebar -->
+      <aside class="sidebar left">
+        <div class="glass card logo-card">
+          <div class="logo">
+            <div class="logo-inner">
+              <i data-lucide="banknote"></i>
+            </div>
+          </div>
+          <div class="brand">
+            <div class="brand-title">Personal Finance Advisor Chatbot</div>
+            <div class="brand-sub">Learn. Plan. Improve.</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-item active" data-page="chat">
+            <i data-lucide="message-square"></i>
+            <span>Chat with Advisor</span>
+          </button>
+          <button class="nav-item" data-page="budget">
+            <i data-lucide="calculator"></i>
+            <span>Budget Calculator</span>
+          </button>
+          <button class="nav-item" data-page="viz">
+            <i data-lucide="chart-pie"></i>
+            <span>Expense Visualization</span>
+          </button>
+          <button class="nav-item" data-page="topics">
+            <i data-lucide="book-open"></i>
+            <span>Finance Topics</span>
+          </button>
+          <button class="nav-item" data-page="about">
+            <i data-lucide="info"></i>
+            <span>About This Project</span>
+          </button>
+        </nav>
+
+
+
+        <div class="glass card profile-card">
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">UA</div>
+            <div class="profile-meta">
+              <div class="username">User</div>
+              <div class="email">user@fincoach.ai</div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="icon-btn" title="Settings" id="settingsBtn">
+              <i data-lucide="settings"></i>
+            </button>
+            <button class="btn danger" id="logoutBtn">
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center panel -->
+      <main class="center">
+        <!-- Center chat header -->
+        <header class="glass topbar" id="centerTopbar">
+          <div class="topbar-left">
+            <div class="topbar-title">Personal Finance Advisor AI</div>
+            <div class="status">
+              <span class="dot"></span>
+              <span>Online</span>
+            </div>
+          </div>
+
+          <div class="topbar-actions">
+            <button class="btn primary" id="newChatBtn">
+              <i data-lucide="plus"></i>
+              New Chat
+            </button>
+          </div>
+        </header>
+
+        <section class="glass center-panel" id="centerPanel">
+          
+          <!-- Force right sidebar to stay visible on topics page (so Popular Topics stays on the right) -->
+
+          <!-- Chat view -->
+          <div class="view" data-view="chat">
+            <div class="chat-area" id="chatArea"></div>
+
+            <div class="welcome" id="welcomeScreen">
+              <div class="welcome-icon">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div class="welcome-title">Welcome to Personal Finance Advisor AI</div>
+              <div class="welcome-sub">
+                Ask questions about budgeting, emergency funds, taxes, insurance, loans,
+                savings, and personal finance.
+              </div>
+
+              <div class="welcome-samples">
+                <button class="sample" data-suggest="How much should I save every month?">
+                  How much should I save every month?
+                </button>
+                <button class="sample" data-suggest="Explain emergency funds for salaried people in India.">
+                  Emergency funds for India
+                </button>
+                <button class="sample" data-suggest="What is EMI and how do I choose a good loan?">
+                  EMI basics
+                </button>
+              </div>
+            </div>
+
+            <div class="chat-inputbar">
+              <button class="icon-btn" title="Voice input" id="voiceBtn">
+                <i data-lucide="mic"></i>
+              </button>
+              <button class="icon-btn" title="Attach file" id="attachBtn">
+                <i data-lucide="paperclip"></i>
+              </button>
+
+              <div class="input-wrap">
+                <textarea
+                  id="messageInput"
+                  rows="1"
+                  placeholder="Ask your finance question..."
+                ></textarea>
+              </div>
+
+              <button class="btn primary" id="sendBtn">
+                <i data-lucide="send"></i>
+                Send
+              </button>
+            </div>
+          </div>
+
+          <!-- Visualization view -->
+          <div class="view hidden" data-view="viz">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Expense Visualization</div>
+                <div class="page-sub">Interactive charts and spending insights.</div>
+              </div>
+            </div>
+
+            <div class="grid charts">
+              <div class="glass card stat-card">
+                <div class="card-title">Expense Breakdown</div>
+                <canvas id="pieChart" height="180"></canvas>
+              </div>
+              <div class="glass card stat-card">
+                <div class="card-title">Income vs Expenses</div>
+                <canvas id="barChart" height="180"></canvas>
+              </div>
+              <div class="glass card stat-card">
+                <div class="card-title">Savings Trend</div>
+                <canvas id="lineChart" height="180"></canvas>
+              </div>
+              <div class="glass card stat-card">
+                <div class="card-title">Category Spending Analysis</div>
+                <div id="categoryAnalysis" class="analysis"></div>
+              </div>
+            </div>
+
+            <div class="note">
+              Charts below use demo data. You can later wire them to real transactions.
+            </div>
+          </div>
+
+        <!-- Topics view -->
+          <div class="view hidden" data-view="topics">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Finance Topics</div>
+                <div class="page-sub">Search and learn key concepts with practical guidance.</div>
+              </div>
+
+              <div class="search">
+                <i data-lucide="search" class="search-icon"></i>
+                <input id="topicSearch" type="text" placeholder="Search topics..." />
+              </div>
+            </div>
+
+            <div class="grid topics-layout">
+              <div class="topics-grid" id="topicsGrid"></div>
+            </div>
+          </div>
+
+
+          <!-- Budget view (moved to center) -->
+          <div class="view hidden" data-view="budget">
+            <div class="budget-page">
+              <div class="budget-header">
+                <div class="budget-h1">Budget Calculator</div>
+                <div class="budget-sub">Enter your monthly income and expenses to compare your budget against the 50/30/20 rule.</div>
+              </div>
+
+              <div class="grid budget-grid">
+                <div class="budget-form-card">
+                  <div class="card-title budget-form-title">Enter Your Monthly Plan</div>
+
+                  <div class="form budget-form">
+                    <label class="field budget-field">
+                      <span>Monthly Income (₹)</span>
+                      <div class="stepper" data-stepper>
+                        <button type="button" class="step-btn" data-step="-">-</button>
+                        <input type="number" id="incomeInput" value="50000" min="0" step="100" />
+                        <button type="button" class="step-btn" data-step="+">+</button>
+                      </div>
+                    </label>
+
+                    <div class="fields-2 budget-fields-2">
+                      <label class="field budget-field">
+                        <span>Rent</span>
+                        <div class="stepper" data-stepper>
+                          <button type="button" class="step-btn" data-step="-">-</button>
+                          <input type="number" id="needsInput" value="25000" min="0" step="500" />
+                          <button type="button" class="step-btn" data-step="+">+</button>
+                        </div>
+                      </label>
+
+                      <label class="field budget-field">
+                        <span>Food</span>
+                        <div class="stepper" data-stepper>
+                          <button type="button" class="step-btn" data-step="-">-</button>
+                          <input type="number" id="wantsInput" value="15000" min="0" step="200" />
+                          <button type="button" class="step-btn" data-step="+">+</button>
+                        </div>
+                      </label>
+                    </div>
+
+                    <div class="fields-2 budget-fields-2">
+                      <label class="field budget-field">
+                        <span>Transport</span>
+                        <div class="stepper" data-stepper>
+                          <button type="button" class="step-btn" data-step="-">-</button>
+                          <input type="number" id="transportInput" value="3000" min="0" step="100" />
+                          <button type="button" class="step-btn" data-step="+">+</button>
+                        </div>
+                      </label>
+
+                      <label class="field budget-field">
+                        <span>Subscriptions</span>
+                        <div class="stepper" data-stepper>
+                          <button type="button" class="step-btn" data-step="-">-</button>
+                          <input type="number" id="subscriptionsInput" value="2000" min="0" step="100" />
+                          <button type="button" class="step-btn" data-step="+">+</button>
+                        </div>
+                      </label>
+                    </div>
+
+                    <div class="fields-2 budget-fields-2">
+                      <label class="field budget-field">
+                        <span>EMI</span>
+                        <div class="stepper" data-stepper>
+                          <button type="button" class="step-btn" data-step="-">-</button>
+                          <input type="number" id="emiInput" value="2500" min="0" step="100" />
+                          <button type="button" class="step-btn" data-step="+">+</button>
+                        </div>
+                      </label>
+
+                      <label class="field budget-field">
+                        <span>Other Expenses</span>
+                        <div class="stepper" data-stepper>
+                          <button type="button" class="step-btn" data-step="-">-</button>
+                          <input type="number" id="otherExpensesInput" value="1500" min="0" step="100" />
+                          <button type="button" class="step-btn" data-step="+">+</button>
+                        </div>
+                      </label>
+                    </div>
+
+                    <label class="field budget-field">
+                      <span>Savings (₹)</span>
+                      <div class="stepper" data-stepper>
+                        <button type="button" class="step-btn" data-step="-">-</button>
+                        <input type="number" id="savingsInput" value="10000" min="0" step="100" />
+                        <button type="button" class="step-btn" data-step="+">+</button>
+                      </div>
+                    </label>
+
+                    <button class="btn budget-calc-btn" id="generateBudgetBtn">Calculate Budget</button>
+
+                    <div class="budget-info-panel">
+                      Fill in the form and click Calculate Budget to see your budget summary.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="budget-results">
+                <div class="budget-result-card">
+                  <div class="card-title budget-result-title">Budget Analysis</div>
+                  <div class="analysis" id="budgetAnalysis"></div>
+                </div>
+
+                <div class="budget-result-card" style="margin-top:14px;">
+                  <div class="card-title budget-result-title">Smart Recommendations</div>
+                  <div class="recommend" id="budgetRecommendations"></div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <!-- About view -->
+          <div class="view hidden" data-view="about">
+            <div class="page-header">
+              <div>
+                <div class="page-title">About This Project</div>
+                <div class="page-sub">A learning-first personal finance companion.</div>
+              </div>
+            </div>
+
+              <div class="glass card about-card">
+              <div class="about-section">
+                <div class="about-k">Project Name</div>
+                <div class="about-v">Personal Finance Advisor Chatbot</div>
+              </div>
+
+              <div class="about-section">
+                <div class="about-k">Objective</div>
+                <div class="about-v">
+                  An AI-powered educational assistant that helps users learn personal finance concepts and
+                  create better budgeting habits.
+                </div>
+              </div>
+
+              <div class="about-section">
+                <div class="about-k">Overview & Disclaimer</div>
+                <div class="about-v disclaimer about-disclaimer-center">
+                  Personal Finance Advisor Chatbot is an AI-powered financial literacy assistant designed to help users understand essential personal finance concepts and develop better money management habits.
+
+                  The chatbot provides simple explanations on topics such as budgeting, emergency funds, savings, investments, taxes, insurance, and loans.
+
+                  Users can interact with the chatbot to learn financial concepts, create personalized budgets using the 50/30/20 rule, analyze expenses, and receive practical savings suggestions based on their income and spending patterns.
+
+                  The project combines conversational AI, a structured financial knowledge base, budget calculation tools, and expense visualization features to make financial education more accessible and engaging.
+
+                  <b>Note:</b> This application is intended for educational and awareness purposes only. It does not provide investment, tax, legal, or professional financial advice.
+                </div>
+              </div>
+
+              <div class="about-section">
+                <div class="about-k">Features</div>
+                <ul class="bullets">
+                  <li>AI Chat Advisor</li>
+                  <li>Budget Calculator</li>
+                  <li>Expense Visualization</li>
+                  <li>Financial Knowledge Base</li>
+                  <li>Savings Recommendations</li>
+                </ul>
+              </div>
+
+              <div class="about-section">
+                <div class="about-k">Disclaimer</div>
+                <div class="about-v disclaimer">
+                  Educational and awareness purposes only. This chatbot does not provide investment, tax, legal, or professional financial advice.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Right panel -->
+      <aside class="sidebar right" id="rightSidebar">
+        <div class="glass card" id="rightPopular">
+          <div class="card-title">Popular Topics</div>
+          <div class="pill-row" id="rightPopularTopics"></div>
+          <div class="hint">Click a topic to ask the advisor.</div>
+        </div>
+
+        <!-- Budget moved to center; keep a placeholder panel for layout compatibility -->
+
+        <div class="right-panel hidden" data-right="budget">
+          <div class="page-header small">
+            <div>
+              <div class="page-title">Budget Calculator</div>
+              <div class="page-sub">Moved to the center.</div>
+            </div>
+          </div>
+          <div class="hint">Use the center calculator.</div>
+        </div>
+
+
+        <div class="right-panel hidden" data-right="topics">
+          <div class="page-header small">
+            <div>
+              <div class="page-title">Ask a Popular Topic</div>
+              <div class="page-sub">Instant starter prompts.</div>
+            </div>
+          </div>
+          <div class="hint">Use the popular topic buttons above, or choose a topic from the list.</div>
+        </div>
+
+
+        <div class="right-panel hidden" data-right="history" id="rightHistoryPanel">
+
+
+          <div class="page-header small" style="padding:16px 14px 0 14px">
+            <div>
+              <div class="page-title">History</div>
+              <div class="page-sub">Your asked questions</div>
+            </div>
+            <button class="btn danger" id="clearHistoryBtn" style="padding:10px 12px; font-weight:900">Delete</button>
+          </div>
+
+          <div class="history-list" id="historyList" style="padding:0 14px 14px 14px"></div>
+        </div>
+
+      </aside>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+
+  </body>
+</html>
+

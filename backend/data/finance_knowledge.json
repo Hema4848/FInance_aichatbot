@@ -1,0 +1,134 @@
+{
+  "topics": [
+    {
+      "topic": "Budgeting Basics",
+      "explanation": "A budget helps you plan income and expenses so you can control spending.",
+      "examples": [
+        "Monthly income: ₹40,000, Expenses: ₹30,000, Savings: ₹10,000"
+      ],
+      "tips": [
+        "Review your budget every month."
+      ],
+      "mistakes": [
+        "Ignoring small daily expenses."
+      ]
+    },
+    {
+      "topic": "Saving Money",
+      "explanation": "Saving means setting aside part of your income for future needs.",
+      "examples": [
+        "Saving ₹5,000 every month creates ₹60,000 in a year."
+      ],
+      "tips": [
+        "Pay yourself first by saving before spending."
+      ],
+      "mistakes": [
+        "Saving only what is left at the end of the month."
+      ]
+    },
+    {
+      "topic": "Debt Management",
+      "explanation": "Managing loans and credit card balances effectively.",
+      "examples": [
+        "Paying off a high-interest credit card before a low-interest loan."
+      ],
+      "tips": [
+        "Always pay at least the minimum amount due."
+      ],
+      "mistakes": [
+        "Taking new loans to pay old loans."
+      ]
+    },
+    {
+      "topic": "Credit Score",
+      "explanation": "A credit score reflects your creditworthiness.",
+      "examples": [
+        "Paying bills on time improves your score."
+      ],
+      "tips": [
+        "Check your credit report regularly."
+      ],
+      "mistakes": [
+        "Missing EMI or credit card payments."
+      ]
+    },
+    {
+      "topic": "Fixed Deposits",
+      "explanation": "A fixed deposit offers a fixed interest rate for a specific period.",
+      "examples": [
+        "Invest ₹50,000 in an FD for 1 year."
+      ],
+      "tips": [
+        "Compare FD rates before investing."
+      ],
+      "mistakes": [
+        "Breaking an FD early and paying penalties."
+      ]
+    },
+    {
+      "topic": "Compound Interest",
+      "explanation": "Interest earned on both the principal and previous interest.",
+      "examples": [
+        "₹10,000 invested at 8% grows faster over time."
+      ],
+      "tips": [
+        "Start investing early."
+      ],
+      "mistakes": [
+        "Delaying investments."
+      ]
+    },
+    {
+      "topic": "EMI Basics",
+      "explanation": "EMI is the fixed monthly payment for a loan.",
+      "examples": [
+        "A ₹5 lakh loan may require a monthly EMI payment."
+      ],
+      "tips": [
+        "Choose an EMI that fits your budget."
+      ],
+      "mistakes": [
+        "Borrowing more than you can repay."
+      ]
+    },
+    {
+      "topic": "Insurance Basics",
+      "explanation": "Insurance protects you financially from unexpected risks.",
+      "examples": [
+        "Health insurance covers hospitalization expenses."
+      ],
+      "tips": [
+        "Compare coverage, not just premiums."
+      ],
+      "mistakes": [
+        "Buying insurance without understanding exclusions."
+      ]
+    },
+    {
+      "topic": "Inflation",
+      "explanation": "Inflation is the rise in prices over time.",
+      "examples": [
+        "A product costing ₹100 today may cost ₹110 next year."
+      ],
+      "tips": [
+        "Invest in assets that can outpace inflation."
+      ],
+      "mistakes": [
+        "Keeping all savings in cash."
+      ]
+    },
+    {
+      "topic": "Goal-Based Saving",
+      "explanation": "Saving money for specific goals such as education, travel, or a house.",
+      "examples": [
+        "Saving ₹2,000 monthly for a vacation."
+      ],
+      "tips": [
+        "Set clear timelines and targets."
+      ],
+      "mistakes": [
+        "Not tracking progress."
+      ]
+    }
+  ]
+}
